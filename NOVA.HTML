@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080a12" />
+  <title>NOVA — Digital Experiences</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    :root{--bg:#080a12;--panel:#101421;--text:#f4f5fb;--muted:#9ba3b8;--line:rgba(255,255,255,.1);--accent:#a78bfa;--cyan:#67e8f9}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 15% 10%,rgba(124,58,237,.2),transparent 35%),radial-gradient(ellipse at 85% 35%,rgba(8,145,178,.13),transparent 32%),#080a12}
+    .grid{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.15;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:58px 58px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+    .glow{position:fixed;width:340px;height:340px;border-radius:50%;background:rgba(139,92,246,.1);filter:blur(80px);pointer-events:none;z-index:-1;transform:translate(-50%,-50%)}
+    .wrap{width:min(1120px,90%);margin:auto}
+    nav{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .logo{font:700 23px 'Space Grotesk';letter-spacing:3px}.logo span{color:var(--accent)}
+    .links{display:flex;gap:30px}.links a,.footer a{color:var(--muted);text-decoration:none;font-size:13px;transition:.25s}.links a:hover,.footer a:hover{color:white}
+    .nav-btn,.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:white;border:1px solid rgba(255,255,255,.18);padding:12px 18px;border-radius:9px;font-size:13px;transition:.3s;background:rgba(255,255,255,.04)}
+    .nav-btn:hover,.btn:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 10px 35px rgba(139,92,246,.18)}
+    .hero{min-height:690px;display:grid;grid-template-columns:1.12fr .88fr;align-items:center;gap:40px;padding:70px 0}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#c4b5fd;border:1px solid rgba(167,139,250,.28);background:rgba(139,92,246,.09);padding:8px 12px;border-radius:50px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+    .dot{width:7px;height:7px;background:#67e8a5;border-radius:50%;box-shadow:0 0 12px #67e8a5}
+    h1{font:600 clamp(48px,7vw,82px)/1.04 'Space Grotesk';letter-spacing:-4px;margin:25px 0}
+    h1 .gradient{background:linear-gradient(100deg,#c4b5fd,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{max-width:510px;color:var(--muted);font-size:16px;line-height:1.8}
+    .actions{display:flex;gap:13px;margin-top:32px;flex-wrap:wrap}.primary{background:linear-gradient(110deg,#8b5cf6,#6366f1);border:0}
+    .hero-note{margin-top:45px;color:#717b91;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+    .visual{height:440px;position:relative;display:grid;place-items:center}
+    .orb{width:280px;height:280px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#e9d5ff 0,#a78bfa 12%,#6d28d9 38%,#17132d 68%,#080a12 74%);box-shadow:0 0 70px rgba(139,92,246,.4),inset -25px -25px 55px rgba(0,0,0,.55);animation:float 6s ease-in-out infinite;position:relative}
+    .orb:after{content:"";position:absolute;inset:-28px;border:1px solid rgba(196,181,253,.28);border-radius:50%;transform:rotateX(70deg) rotate(-25deg);box-shadow:0 0 25px rgba(167,139,250,.1)}
+    .orbit{position:absolute;width:390px;height:150px;border:1px solid rgba(103,232,249,.35);border-radius:50%;transform:rotate(-27deg);animation:spin 16s linear infinite}
+    .orbit:before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:var(--cyan);top:13px;left:65px;box-shadow:0 0 20px var(--cyan)}
+    .float-card{position:absolute;padding:14px 17px;background:rgba(17,20,34,.82);border:1px solid var(--line);backdrop-filter:blur(14px);border-radius:12px;font-size:12px;box-shadow:0 15px 40px rgba(0,0,0,.25);animation:float 5s ease-in-out infinite}
+    .float-card b{display:block;font:600 18px 'Space Grotesk';margin-bottom:3px}.float-card small{color:var(--muted)}
+    .card-a{top:45px;right:0}.card-b{bottom:55px;left:0;animation-delay:-2s}
+    section{padding:95px 0}.section-top{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:38px}
+    .kicker{color:var(--cyan);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+    h2{font:600 clamp(32px,4vw,48px)/1.1 'Space Grotesk';letter-spacing:-1.8px}
+    .section-top>p{color:var(--muted);max-width:360px;line-height:1.7;font-size:14px}
+    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .service,.project,.contact-box{background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));border:1px solid var(--line);border-radius:16px}
+    .service{padding:27px;transition:.3s}.service:hover,.project:hover{transform:translateY(-6px);border-color:rgba(167,139,250,.45)}
+    .icon{width:43px;height:43px;border-radius:12px;display:grid;place-items:center;background:rgba(167,139,250,.13);color:#c4b5fd;font-size:20px;margin-bottom:24px}
+    h3{font:600 19px 'Space Grotesk';margin-bottom:10px}.service p,.project p{color:var(--muted);font-size:13px;line-height:1.7}
+    .projects{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .project{overflow:hidden;transition:.3s}.project-art{height:220px;display:grid;place-items:center;position:relative;overflow:hidden}
+    .art-one{background:radial-gradient(circle at 50% 50%,#5930a5,#17142e 60%,#0c1020)}
+    .art-two{background:radial-gradient(circle at 50% 50%,#155e75,#102333 55%,#0b111b)}
+    .mock-window{width:72%;height:145px;border:1px solid rgba(255,255,255,.28);border-radius:10px;background:rgba(8,10,18,.65);backdrop-filter:blur(10px);padding:13px;transform:rotate(-5deg);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+    .mock-dots{display:flex;gap:5px;margin-bottom:15px}.mock-dots i{width:5px;height:5px;border-radius:50%;background:#b7a4ff}
+    .mock-line{height:7px;width:70%;border-radius:5px;background:rgba(255,255,255,.7);margin:8px 0}.mock-line.short{width:38%;opacity:.35}.mock-blocks{display:flex;gap:7px;margin-top:14px}.mock-blocks i{height:35px;flex:1;border-radius:5px;background:linear-gradient(135deg,rgba(167,139,250,.7),rgba(103,232,249,.2))}
+    .project-info{padding:22px}.tag{display:inline-block;color:#c4b5fd;font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:9px}
+    .contact-box{padding:45px;display:flex;align-items:center;justify-content:space-between;gap:25px;background:radial-gradient(ellipse at 90% 0,rgba(139,92,246,.18),transparent 50%),rgba(255,255,255,.025)}
+    .contact-box p{color:var(--muted);margin-top:12px;font-size:14px}
+    footer{padding:30px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;color:#717b91;font-size:12px}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.reveal.show{opacity:1;transform:translateY(0)}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+    @keyframes spin{to{transform:rotate(333deg)}}
+    @media(max-width:760px){.links{display:none}.hero{grid-template-columns:1fr;padding:65px 0 35px;gap:5px}.hero{min-height:auto}h1{letter-spacing:-2.5px}.visual{height:350px}.orb{width:210px;height:210px}.orbit{width:300px;height:115px}.card-a{right:2%}.card-b{left:2%}.section-top{display:block}.section-top>p{margin-top:15px}.services{grid-template-columns:1fr}.projects{grid-template-columns:1fr}section{padding:70px 0}.contact-box{padding:28px;display:block}.contact-box .btn{margin-top:22px}footer{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="grid"></div><div class="glow" id="glow"></div>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#">N<span>O</span>VA.</a>
+      <div class="links"><a href="#about">About</a><a href="#services">Services</a><a href="#work">Work</a></div>
+      <a class="nav-btn" href="#contact">Let's talk ↗</a>
+    </nav>
+
+    <main>
+      <div class="hero" id="about">
+        <div class="reveal">
+          <div class="eyebrow"><i class="dot"></i> Independent digital studio</div>
+          <h1>Ideas into<br><span class="gradient">experiences.</span></h1>
+          <p>We create thoughtful digital experiences with clean design, smooth interactions, and a little bit of magic.</p>
+          <div class="actions"><a class="btn primary" href="#work">Explore our work ↗</a><a class="btn" href="#services">What we do</a></div>
+          <div class="hero-note">Design · Development · Creativity</div>
+        </div>
+        <div class="visual reveal">
+          <div class="orbit"></div><div class="orb"></div>
+          <div class="float-card card-a"><b>100%</b><small>Made with curiosity</small></div>
+          <div class="float-card card-b"><b>✦ Creative</b><small>Built beyond ordinary</small></div>
+        </div>
+      </div>
+
+      <section id="services">
+        <div class="section-top reveal"><div><div class="kicker">01 / What we do</div><h2>Small details.<br>Big impact.</h2></div><p>From the first sketch to the final interaction, every detail has a purpose.</p></div>
+        <div class="services">
+          <article class="service reveal"><div class="icon">✳</div><h3>Web Design</h3><p>Modern layouts, strong visual identity, and interfaces that feel effortless to use.</p></article>
+          <article class="service reveal"><div class="icon">⌘</div><h3>Development</h3><p>Responsive websites built with clean code and smooth, purposeful interactions.</p></article>
+          <article class="service reveal"><div class="icon">✧</div><h3>Creative Ideas</h3><p>Fresh concepts and digital experiments that make a brand feel memorable.</p></article>
+        </div>
+      </section>
+
+      <section id="work">
+        <div class="section-top reveal"><div><div class="kicker">02 / Selected concepts</div><h2>Made to stand out.</h2></div><p>A couple of visual concepts showing how a digital idea can come to life.</p></div>
+        <div class="projects">
+          <article class="project reveal"><div class="project-art art-one"><div class="mock-window"><div class="mock-dots"><i></i><i></i><i></i></div><div class="mock-line"></div><div class="mock-line short"></div><div class="mock-blocks"><i></i><i></i><i></i></div></div></div><div class="project-info"><span class="tag">01 / Brand concept</span><h3>Obsidian Studio</h3><p>A bold, minimal digital home for a creative brand.</p></div></article>
+          <article class="project reveal"><div class="project-art art-two"><div class="mock-window"><div class="mock-dots"><i></i><i></i><i></i></div><div class="mock-line"></div><div class="mock-line short"></div><div class="mock-blocks"><i></i><i></i><i></i></div></div></div><div class="project-info"><span class="tag">02 / Product concept</span><h3>Blue Horizon</h3><p>A calm, modern interface for a future-focused product.</p></div></article>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="contact-box reveal"><div><div class="kicker">03 / Your next idea</div><h2>Let's make<br>something great.</h2><p>Have an idea? Let's turn it into something real.</p></div><a class="btn primary" href="mailto:hello@example.com">Say hello ↗</a></div>
+      </section>
+    </main>
+    <footer><span>© 2026 NOVA Studio. Concept website.</span><span>Designed for the curious ✦</span></footer>
+  </div>
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.12});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const glow = document.getElementById('glow');
+    window.addEventListener('pointermove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+  </script>
+</body>
+</html>
